@@ -1,32 +1,21 @@
-# Goals, Environment, and Adaptation (for Final Project)
+# Goals, Environment, Adaptation Sheet
+By Human Behavior 1
 
-(From the Final write-up)
-> You should fill out the GEA worksheet for the first Phase of this project. Within your _Environment_ section, I want you to layout who the stakeholders are for your system and reflect upon how your system may positively or negatively each of these stakeholders. You should use this as a part of your Final Report as well as your presentations.
+## Project Description
+We’ll be focusing on the psychology section of investigating Human Behavior. We are going to use ACT-R to model human driving behaviors under various conditions. We will use rules and declarative memory and illustrate the model in a Unity (or simple Python) environment where the AI agent will make decisions based on a changing driving environment. This agent will simulate human behavior and how drivers react to sudden road obstacles based on cognitive load.
 
-1. Describe your system in terms of **goals**, **environment**, and **adaptations**. Also answer the following questions:
-2. How could it enact problematic social systems/practices? How will your system get around those potential issues?
 
-<br /><br />
-This is meant to allow us to begin to bridge from designing independent of implementation, to designing along side implementation. This is also meant to have us think about how our AI systems are developed within existing social contexts.
+## Goals
+The main goal of the AI system is to simulate realistic human driving behavior, particularly focusing on how drivers react to sudden road obstacles under varying levels of cognitive load. The system aims to model human decision-making processes using ACT-R, incorporating rules and declarative memory to reflect how drivers recall past experiences and adjust their actions accordingly. Another key objective is to observe how cognitive factors, such as distractions or high mental demands, influence driving performance. Additionally, the AI system is designed to test a variety of driving scenarios, providing insights into behavioral patterns and helping to predict how humans adapt to complex and unexpected road conditions.
 
-Remember, you can draw pictures/diagrams to augment your words (for the **G**, **E**, and **A**).
+## Environment
+The environment in which the system will operate is a virtual driving simulation, built either in Unity or Python. This environment will include essential driving elements such as roads, lanes, traffic, and various obstacles that appear suddenly to challenge the AI agent. Additional factors like weather conditions and distractions may also be introduced to simulate different levels of cognitive load. 
 
-### Goals
+The stakeholders for the system are the Automotive Industry, Transportation Safety Agencies, and everyone who drives a car regularly. This system will benefit the automotive industry by providing data on human driving behaviors and improving autonomous vehicle systems. However, an over-reliance on simulation results may lead to incomplete understanding if real-world factors are not considered. For Transportation Safety Agencies, this system could help identify key human factors that influence accidents, leading to more informed policymaking. Additionally, it could aid in designing better traffic laws and driver assistance regulations.
+On the other hand, misinterpretation of AI-driven results could lead to unnecessary regulatory restrictions. For everyday drivers, this system could contribute to the development of driver assistance tools that enhance safety and can help in understanding how distractions impact driving, leading to better education and awareness. On the negative side, there could be privacy concerns if real driving data is used to enhance AI training.
 
-+ What might be the goals of the _AI_ system?
+## Adaptation
+The system will adjust to its environment through various processes to achieve its objectives. The AI agent will adjust its behavior according to previous experiences stored in declarative memory, allowing it to more effectively manage challenges as it faces similar situations over time. The system will modify the prioritization of its decision-making protocols, placing greater emphasis on safety measures such as obstacle avoidance during periods of higher cognitive load. As environmental conditions become increasingly complex—due to factors such as reduced visibility, heightened traffic levels, or unexpected occurrences—the AI may adopt a more cautious driving strategy. The agent's internal simulated cognitive state will develop over time, affecting its reaction speed and risk tolerance concerning previous outcomes and present circumstances. The dynamic adaptation enables the AI to replicate human-like flexibility in its responses to the continuously evolving driving environment.
 
-<div style="margin-bottom: 265px;">&nbsp;</div>
-
-### Environment
-
-+ What is the environment that the system will be adapting within?
-
-<div style="margin-bottom: 265px;">&nbsp;</div>
-
-### Adaptation
-
-+ How might the system adapt to the environment given the goals? How might it's inner environment change?
-
-<div style="margin-bottom: 250px;">&nbsp;</div>
-
-### How could it enact problematic social systems/practices? How will your system get around those potential issues?
+## How could it enact problematic social systems/practices? How will your system get around those potential issues?
+One problematic social practice is the idea of moral superiority or prioritizing certain groups over others. This could be a problem when faced with a moral dilemma and the AI would have to choose which is the correct option based on what it is presented with. To get around this potential issue we will first choose to prioritize the car's safety but also strongly take into account the safety of pedestrians.
