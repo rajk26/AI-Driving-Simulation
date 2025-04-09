@@ -6,27 +6,48 @@ import random
 import time
 
 twolane="""
-###############################
-#                             #
-#                             #
-###############################
+##########################
+#                       C#
+#                        #
+##########################
+"""
+
+# Agent is tested if it can turn correctly
+T_shaped="""
+##################
+#                #
+#                #
+###########  #####
+          #  #
+          #  #
+          # C#
+          ####
+"""
+
+# Agent is tested if paying attention. Make blue blocks illustrating water
+hill_turn="""
+#############WWWWWWWWWWWWW
+#                       C#
+#                        #
+##########################
 """
 
 my_log = python_actr.log()#data=True, directory="/Users/cld5070/teaching-repos/AI-Course/RBES")
 
 class MyCell(grid.Cell):
-	dirty=False
-	chargingsquare=False
+	targetsquare=False
+	watersquare=False
+
 	def color(self):
-		if self.chargingsquare: return "green"
-		elif self.dirty: return 'brown'
+		if self.targetsquare: return "green"
 		elif self.wall: return 'black'
+		elif self.watersquare: return 'blue'
 		else: return 'white'
 
 	def load(self,char):
 		if char=='#': self.wall=True
-		elif char=='D': self.dirty=True
-		elif char=='C': self.chargingsquare=True
+		elif char=='C': self.targetsquare=True
+		elif char=='W': self.watersquare=True
 
 class MotorModule(python_actr.Model):
 	FORWARD_TIME = .1
@@ -114,28 +135,14 @@ class MotorModule(python_actr.Model):
 		#yield MotorModule.CLEAN_TIME
 		self.busy=False
 
-	def clean_if_dirty(self):
-		"Clean cell if dirty"
-		if (self.energy < 5):
-			print("EnergyLow!")
-			self.action=None
-		if (self.parent.body.cell.dirty):
-			self.action="cleaning cell"
-			self.clean()
-
-	def clean(self):
-		self.energy -= MotorModule.CLEAN_ENERGY_COST
-		self.parent.body.cell.dirty=False
-		my_log.clean_at = (self.parent.body.x, self.parent.body.y)
-		#After we add our agent to the world, the world makes the agent's parent itself.
-		#Check if our world is clean (and thus can stop the simulation)
-		yield MotorModule.CLEAN_TIME
-		if (self.parent.parent.check_clean()):
-			self.run(0.1)
-			self.parent.goal.set("start_recall_dirt")
+	def reach_destination(self):
+		if(self.parent.body.cell.targetsquare):
+			self.action="ending sim"
 			self.stop()
 
-
+	def hit_wall(self):
+		self.action="ending sim"
+		self.stop()
 
 class ObstacleModule(python_actr.ProductionSystem):
 	production_time=0
