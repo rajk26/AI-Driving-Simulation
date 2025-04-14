@@ -47,17 +47,57 @@ class DrivingAgent(ACTR):
         
     # Rule: Blue runs into another agent. Give score 0
             
+class NPCAgent(ACTR):
+    goal=Buffer()
+    retrieval = Buffer()
+    DM_module = Memory(retrieval)
+    motorInst = MotorModule()
+    body=grid.Body()
+    
+    def init():
+        goal.set('start')
+        
+    def start_driving(goal="start"):
+        motorInst.go_forward()
+
 def twolaneExp():
     world=grid.World(MyCell,map=AgentSupport.twolane)
-
+    
     agent=DrivingAgent()
     world.add(agent,x=1,y=1,dir=2,color='blue')
+    
+    agent=NPCAgent()
+    world.add(agent,x=20,y=2,dir=6,color='green')
+    
+    python_actr.display(world)
+    world.run()
+    
+def turn_exp():
+    world=grid.World(MyCell,map=AgentSupport.T_shaped)
+    
+    agent=DrivingAgent()
+    world.add(agent,x=1,y=1,dir=2,color='blue')
+    
+    agent=NPCAgent()
+    world.add(agent,x=14,y=2,dir=6,color='green')
+    
+    python_actr.display(world)
+    world.run()
+    
+def hill_exp():
+    world=grid.World(MyCell,map=AgentSupport.hill_turn)
+    
+    agent=DrivingAgent()
+    world.add(agent,x=1,y=1,dir=2,color='blue')
+    
+    npc1=NPCAgent()
+    npc2=NPCAgent()
+    world.add(npc1,x=20,y=3,dir=6,color='green')
+    world.add(npc2,x=17,y=4,dir=6,color='green')
     
     python_actr.display(world)
     world.run()
 
-# agent2=MyAgent() # Going to use another agent to drive the other way
-# agent2.body.color='green'
-# world.add(agent2,x=10,y=3)
-
-twolaneExp()
+# twolaneExp()
+# turn_exp()
+hill_exp()

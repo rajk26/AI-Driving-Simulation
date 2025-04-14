@@ -6,10 +6,10 @@ import random
 import time
 
 twolane="""
-##########################
-#                       C#
-#                        #
-##########################
+#######################
+#                    C#
+#                     #
+#######################
 """
 
 # Agent is tested if it can turn correctly
@@ -26,10 +26,12 @@ T_shaped="""
 
 # Agent is tested if paying attention. Make blue blocks illustrating water
 hill_turn="""
-#############WWWWWWWWWWWWW
-#                       C#
-#                        #
-##########################
+#############WWWWWWWWWWWW
+#                      C#
+#           O          C#
+#                       #
+#                       #
+#########################
 """
 
 my_log = python_actr.log()#data=True, directory="/Users/cld5070/teaching-repos/AI-Course/RBES")
@@ -37,17 +39,20 @@ my_log = python_actr.log()#data=True, directory="/Users/cld5070/teaching-repos/A
 class MyCell(grid.Cell):
 	targetsquare=False
 	watersquare=False
+	obstaclesquare=False
 
 	def color(self):
 		if self.targetsquare: return "green"
 		elif self.wall: return 'black'
 		elif self.watersquare: return 'blue'
+		elif self.obstaclesquare: return 'red'
 		else: return 'white'
 
 	def load(self,char):
 		if char=='#': self.wall=True
 		elif char=='C': self.targetsquare=True
 		elif char=='W': self.watersquare=True
+		elif char=='O': self.obstaclesquare=True
 
 class MotorModule(python_actr.Model):
 	FORWARD_TIME = .1
