@@ -4,8 +4,10 @@ import python_actr
 from python_actr.lib import grid
 from python_actr.actr import *
 import random
+import time
 
-HIT_WALL_PENALTY = .01
+HIT_WALL_PENALTY = .01 # mental note. Aparently ACTR doesnt recognize constants
+TEST1_IDEAL_TIME = 2.3 # if agent acts perfectly
 
 class DrivingAgent(ACTR):
     goal=Buffer()
@@ -29,16 +31,23 @@ class DrivingAgent(ACTR):
         # if rubbernecking, not looking
         # if looking at off-road objects/ scenery, not looking
         
-    def start_driving(goal="start"):
+    def drive_forward(goal="start"):
         motorInst.go_forward()
         
 		#start going toward target!
         goal.set("start")
 		#Request next step from DM
         # DM_module.request("prev:driving next:?")
+        
+    # def merge_right(goal="start", motorInst='busy:False'):
+    #     motorInst.go_forward()
+        
+	# 	#Request next step from DM
+    #     # DM_module.request("prev:driving next:?")
     
     # Wall detection. If driver htis a wall but is on green sq, end sim positive result
     def destination(body="cell.targetsquare:True"):
+        time_taken = 2 # in seconds
         score = 1
         motorInst.reach_destination()
         
@@ -74,7 +83,14 @@ def twolaneExp():
     world.add(npc_agent1,x=20,y=2,dir=6,color='green')
     
     python_actr.display(world)
+    start_time = time.time()
     world.run()
+    end_time = time.time()
+    exp_time = end_time - start_time
+    
+    score = agent.score - (exp_time * .025);
+    # print("Time: ", exp_time)
+    print("Agent Score: ", score)
     
 def turn_exp():
     world=grid.World(MyCell,map=AgentSupport.T_shaped)

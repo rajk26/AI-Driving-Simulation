@@ -146,10 +146,8 @@ class MotorModule(python_actr.Model):
 			self.stop()
 
 	def hit_wall(self):
-		# deduct points
-		self.action="ending sim"
-		self.stop()
-
+		# make it go randomly left or right
+		self.go_left()
 # class ObstacleModule(python_actr.ProductionSystem):
 # 	production_time=0
 
