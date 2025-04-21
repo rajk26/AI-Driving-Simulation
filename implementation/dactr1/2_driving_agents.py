@@ -15,7 +15,6 @@ class DrivingAgent(ACTR):
     body=grid.Body()
     
     score = 1 # score used to evaluate Agent versus env
-    hit_wall_penalty = .01
 
     def init():
         goal.set('start')
@@ -39,14 +38,14 @@ class DrivingAgent(ACTR):
         # DM_module.request("prev:driving next:?")
     
     # Wall detection. If driver htis a wall but is on green sq, end sim positive result
-    def wall_destination(body="targetsquare:True"):
+    def destination(body="cell.targetsquare:True"):
         score = 1
         motorInst.reach_destination()
         
     # Wall detection. If driver htis a wall but is not on green sq, end sim negative result
     def wall_collision(body="ahead_cell.wall:True"):
-        score -= HIT_WALL_PENALTY # subtract score based on set amount
-        motorInst.hit_wall()
+        score -= .01 # subtract score based on set amount
+        # motorInst.hit_wall()
         
     # Rule: Blue runs into another agent. Give score 0
             
