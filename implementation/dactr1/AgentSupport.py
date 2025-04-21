@@ -146,46 +146,47 @@ class MotorModule(python_actr.Model):
 			self.stop()
 
 	def hit_wall(self):
+		# deduct points
 		self.action="ending sim"
 		self.stop()
 
-class ObstacleModule(python_actr.ProductionSystem):
-	production_time=0
+# class ObstacleModule(python_actr.ProductionSystem):
+# 	production_time=0
 
-	def init():
-		self.ahead=body.ahead_cell.wall
-		self.left=body.left90_cell.wall
-		self.right=body.right90_cell.wall
-		self.left45=body.left_cell.wall
-		self.right45=body.right_cell.wall
+# 	def init():
+# 		self.ahead=body.ahead_cell.wall
+# 		self.left=body.left90_cell.wall
+# 		self.right=body.right90_cell.wall
+# 		self.left45=body.left_cell.wall
+# 		self.right45=body.right_cell.wall
 
 
-	def check_ahead(self='ahead:False',body='ahead_cell.wall:True'):
-		self.ahead=True
+# 	def check_ahead(self='ahead:False',body='ahead_cell.wall:True'):
+# 		self.ahead=True
 
-	def check_left(self='left:False',body='left90_cell.wall:True'):
-		self.left=True
+# 	def check_left(self='left:False',body='left90_cell.wall:True'):
+# 		self.left=True
 
-	def check_left45(self='left45:False',body='left_cell.wall:True'):
-		self.left45=True
+# 	def check_left45(self='left45:False',body='left_cell.wall:True'):
+# 		self.left45=True
 
-	def check_right(self='right:False',body='right90_cell.wall:True'):
-		self.right=True
+# 	def check_right(self='right:False',body='right90_cell.wall:True'):
+# 		self.right=True
 
-	def check_right45(self='right45:False',body='right_cell.wall:True'):
-		self.right45=True
+# 	def check_right45(self='right45:False',body='right_cell.wall:True'):
+# 		self.right45=True
 
-	def check_ahead2(self='ahead:True',body='ahead_cell.wall:False'):
-		self.ahead=False
+# 	def check_ahead2(self='ahead:True',body='ahead_cell.wall:False'):
+# 		self.ahead=False
 
-	def check_left2(self='left:True',body='left90_cell.wall:False'):
-		self.left=False
+# 	def check_left2(self='left:True',body='left90_cell.wall:False'):
+# 		self.left=False
 
-	def check_left452(self='left45:True',body='left_cell.wall:False'):
-		self.left45=False
+# 	def check_left452(self='left45:True',body='left_cell.wall:False'):
+# 		self.left45=False
 
-	def check_right2(self='right:True',body='right90_cell.wall:False'):
-		self.right=False
+# 	def check_right2(self='right:True',body='right90_cell.wall:False'):
+# 		self.right=False
 
-	def check_right452(self='right45:True',body='right_cell.wall:False'):
-		self.right45=False
+# 	def check_right452(self='right45:True',body='right_cell.wall:False'):
+# 		self.right45=False

@@ -5,6 +5,8 @@ from python_actr.lib import grid
 from python_actr.actr import *
 import random
 
+HIT_WALL_PENALTY = .01
+
 class DrivingAgent(ACTR):
     goal=Buffer()
     retrieval = Buffer()
@@ -12,7 +14,8 @@ class DrivingAgent(ACTR):
     motorInst = MotorModule()
     body=grid.Body()
     
-    score = 0 # score used to evaluate Agent versus env
+    score = 1 # score used to evaluate Agent versus env
+    hit_wall_penalty = .01
 
     def init():
         goal.set('start')
@@ -36,13 +39,13 @@ class DrivingAgent(ACTR):
         # DM_module.request("prev:driving next:?")
     
     # Wall detection. If driver htis a wall but is on green sq, end sim positive result
-    def wall_destination(motorInst="targetsquare:True", body="ahead_cell.wall:True"):
+    def wall_destination(body="targetsquare:True"):
         score = 1
         motorInst.reach_destination()
         
     # Wall detection. If driver htis a wall but is not on green sq, end sim negative result
-    def wall_collision(motorInst="busy:False", body="ahead_cell.wall:True"):
-        score = 0
+    def wall_collision(body="ahead_cell.wall:True"):
+        score -= HIT_WALL_PENALTY # subtract score based on set amount
         motorInst.hit_wall()
         
     # Rule: Blue runs into another agent. Give score 0
@@ -58,6 +61,7 @@ class NPCAgent(ACTR):
         goal.set('start')
         
     def start_driving(goal="start"):
+        # change speed if you want
         motorInst.go_forward()
 
 def twolaneExp():
@@ -65,9 +69,10 @@ def twolaneExp():
     
     agent=DrivingAgent()
     world.add(agent,x=1,y=1,dir=2,color='blue')
+    python_actr.log_everything(agent, AgentSupport.my_log)
     
-    agent=NPCAgent()
-    world.add(agent,x=20,y=2,dir=6,color='green')
+    npc_agent1=NPCAgent()
+    world.add(npc_agent1,x=20,y=2,dir=6,color='green')
     
     python_actr.display(world)
     world.run()
@@ -98,6 +103,6 @@ def hill_exp():
     python_actr.display(world)
     world.run()
 
-# twolaneExp()
+twolaneExp()
 # turn_exp()
-hill_exp()
+# hill_exp()
