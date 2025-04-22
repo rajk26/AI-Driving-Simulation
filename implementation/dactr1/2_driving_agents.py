@@ -7,6 +7,7 @@ import random
 import time
 
 HIT_WALL_PENALTY = .01 # mental note. Aparently ACTR doesnt recognize constants
+OBSTACLE_PENALTY = .5 # mental note. Aparently ACTR doesnt recognize constants
 TEST1_IDEAL_TIME = 2.3 # if agent acts perfectly
 
 class DrivingAgent(ACTR):
@@ -31,7 +32,7 @@ class DrivingAgent(ACTR):
         # if rubbernecking, not looking
         # if looking at off-road objects/ scenery, not looking
         
-    def drive_forward(goal="start"):
+    def drive_forward(goal="start", motorInst="busy:False"):
         motorInst.go_forward()
         
 		#start going toward target!
@@ -40,21 +41,30 @@ class DrivingAgent(ACTR):
         # DM_module.request("prev:driving next:?")
         
     # def merge_right(goal="start", motorInst='busy:False'):
-    #     motorInst.go_forward()
+    #     motorInst.turn_right()
+        
+	# 	#Request next step from DM
+    #     # DM_module.request("prev:driving next:?")
+        
+    # def merge_left(goal="start", motorInst='busy:False'):
+    #     motorInst.turn_left()
         
 	# 	#Request next step from DM
     #     # DM_module.request("prev:driving next:?")
     
-    # Wall detection. If driver htis a wall but is on green sq, end sim positive result
-    def destination(body="cell.targetsquare:True"):
-        time_taken = 2 # in seconds
-        score = 1
+    # If driver reaches green sq, end sim positive result
+    def destination(body="cell.targetsquare:True", utility=.6):
         motorInst.reach_destination()
         
     # Wall detection. If driver htis a wall but is not on green sq, end sim negative result
     def wall_collision(body="ahead_cell.wall:True"):
         score -= .01 # subtract score based on set amount
         # motorInst.hit_wall()
+    
+    # if agent runs into a large obstacle, subtract heavily from sim
+    def obstacle_collision(body="cell.obstaclesquare:True"):
+        score -= 0.5
+        motorInst.hit_obstacle()
         
     # Rule: Blue runs into another agent. Give score 0
             
@@ -73,7 +83,7 @@ class NPCAgent(ACTR):
         motorInst.go_forward()
 
 def twolaneExp():
-    world=grid.World(MyCell,map=AgentSupport.twolane)
+    world=grid.World(MyCell,map=AgentSupport.right_turn)
     
     agent=DrivingAgent()
     world.add(agent,x=1,y=1,dir=2,color='blue')
@@ -83,12 +93,15 @@ def twolaneExp():
     world.add(npc_agent1,x=20,y=2,dir=6,color='green')
     
     python_actr.display(world)
+    
     start_time = time.time()
     world.run()
     end_time = time.time()
-    exp_time = end_time - start_time
+    exp_time = end_time - start_time # gets time of agent in env
     
     score = agent.score - (exp_time * .025);
+    if score < 0: # if sim ends abruptly
+        score = 0
     # print("Time: ", exp_time)
     print("Agent Score: ", score)
     

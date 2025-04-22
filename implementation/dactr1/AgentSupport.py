@@ -12,6 +12,13 @@ twolane="""
 #######################
 """
 
+sandbox="""
+#######################
+#            O       C#
+#                     #
+#######################
+"""
+
 # Agent is tested if it can turn correctly
 T_shaped="""
 ##################
@@ -22,6 +29,15 @@ T_shaped="""
           #  #
           # C#
           ####
+"""
+
+right_turn="""
+##############
+            #####
+                #######
+######               C#
+    #######           #
+          #############
 """
 
 # Agent is tested if paying attention. Make blue blocks illustrating water
@@ -148,6 +164,11 @@ class MotorModule(python_actr.Model):
 	def hit_wall(self):
 		# make it go randomly left or right
 		self.go_left()
+
+	def hit_obstacle(self):
+		self.parent.body.cell.obstaclesquare=False # get rid of obstacle
+		self.FORWARD_TIME = .01 # allude that car is damaged
+
 # class ObstacleModule(python_actr.ProductionSystem):
 # 	production_time=0
 
