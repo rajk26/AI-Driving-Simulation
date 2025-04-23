@@ -12,6 +12,26 @@ twolane="""
 #######################
 """
 
+fourlane_with_obj="""
+#######################
+#            O       C#
+#                    C#
+#                     #
+#                     #
+#######################
+"""
+
+sixlane_with_objs="""
+#######################
+#      O    O        C#
+#            O     O C#
+#         O      O   C#
+#                     #
+#                     #
+#                     #
+#######################
+"""
+
 sandbox="""
 #######################
 #            O       C#
@@ -75,8 +95,6 @@ class MotorModule(python_actr.Model):
 	FORWARD_ENERGY_COST = 1
 	TURN_TIME = 0.025
 	TURN_ENERGY_COST = 1
-	CLEAN_TIME = 0.025
-	CLEAN_ENERGY_COST = 1
 	INIT_ENERGY = 35
 
 	def __init__(self):
@@ -156,6 +174,83 @@ class MotorModule(python_actr.Model):
 		#yield MotorModule.CLEAN_TIME
 		self.busy=False
 
+	def veer_right(self):
+		if self.busy: return
+		self.busy=True
+
+		self.action='turning right'
+		yield 0.1
+		self.parent.body.turn_right()
+		self.action='going forward'
+		self.parent.body.go_forward()
+		yield MotorModule.FORWARD_TIME
+
+		self.action='turning left'
+		yield MotorModule.TURN_TIME
+		self.parent.body.turn_left()
+		self.action="going forward"
+		self.parent.body.go_forward()
+		yield MotorModule.FORWARD_TIME
+
+		self.action='turning left'
+		yield MotorModule.TURN_TIME
+		self.parent.body.turn_left()
+		self.action="going forward"
+		self.parent.body.go_forward()
+		yield MotorModule.FORWARD_TIME
+
+		self.action='turning right'
+		yield 0.1
+		self.parent.body.turn_right()
+		self.action='going forward'
+		self.parent.body.go_forward()
+		yield MotorModule.FORWARD_TIME
+
+		self.action=None
+		self.busy=False
+
+	def veer_left(self):
+		if self.busy: return
+		self.busy=True
+
+		self.action='turning left'
+		yield MotorModule.TURN_TIME
+		self.parent.body.turn_left()
+		self.action="going forward"
+		self.parent.body.go_forward()
+		yield MotorModule.FORWARD_TIME
+
+		self.action='turning right'
+		yield 0.1
+		self.parent.body.turn_right()
+		self.action='going forward'
+		self.parent.body.go_forward()
+		yield MotorModule.FORWARD_TIME
+
+		self.action='turning right'
+		yield 0.1
+		self.parent.body.turn_right()
+		self.action='going forward'
+		self.parent.body.go_forward()
+		yield MotorModule.FORWARD_TIME
+
+		self.action='turning left'
+		yield MotorModule.TURN_TIME
+		self.parent.body.turn_left()
+		self.action="going forward"
+		self.parent.body.go_forward()
+		yield MotorModule.FORWARD_TIME
+
+		self.action='turning right'
+		yield 0.1
+		self.parent.body.turn_right()
+		self.action='going forward'
+		self.parent.body.go_forward()
+		yield MotorModule.FORWARD_TIME
+
+		self.action=None
+		self.busy=False
+
 	def reach_destination(self):
 		if(self.parent.body.cell.targetsquare):
 			self.action="ending sim"
@@ -168,44 +263,3 @@ class MotorModule(python_actr.Model):
 	def hit_obstacle(self):
 		self.parent.body.cell.obstaclesquare=False # get rid of obstacle
 		self.FORWARD_TIME = .01 # allude that car is damaged
-
-# class ObstacleModule(python_actr.ProductionSystem):
-# 	production_time=0
-
-# 	def init():
-# 		self.ahead=body.ahead_cell.wall
-# 		self.left=body.left90_cell.wall
-# 		self.right=body.right90_cell.wall
-# 		self.left45=body.left_cell.wall
-# 		self.right45=body.right_cell.wall
-
-
-# 	def check_ahead(self='ahead:False',body='ahead_cell.wall:True'):
-# 		self.ahead=True
-
-# 	def check_left(self='left:False',body='left90_cell.wall:True'):
-# 		self.left=True
-
-# 	def check_left45(self='left45:False',body='left_cell.wall:True'):
-# 		self.left45=True
-
-# 	def check_right(self='right:False',body='right90_cell.wall:True'):
-# 		self.right=True
-
-# 	def check_right45(self='right45:False',body='right_cell.wall:True'):
-# 		self.right45=True
-
-# 	def check_ahead2(self='ahead:True',body='ahead_cell.wall:False'):
-# 		self.ahead=False
-
-# 	def check_left2(self='left:True',body='left90_cell.wall:False'):
-# 		self.left=False
-
-# 	def check_left452(self='left45:True',body='left_cell.wall:False'):
-# 		self.left45=False
-
-# 	def check_right2(self='right:True',body='right90_cell.wall:False'):
-# 		self.right=False
-
-# 	def check_right452(self='right45:True',body='right_cell.wall:False'):
-# 		self.right45=False
