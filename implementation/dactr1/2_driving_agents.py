@@ -81,24 +81,28 @@ class NPCAgent(ACTR):
     def start_driving(goal="start"):
         # change speed if you want
         motorInst.go_forward()
-
-def twolaneExp():
-    world=grid.World(MyCell,map=AgentSupport.right_turn)
     
-    agent=DrivingAgent()
-    world.add(agent,x=1,y=1,dir=2,color='blue')
-    python_actr.log_everything(agent, AgentSupport.my_log)
-    
-    npc_agent1=NPCAgent()
-    world.add(npc_agent1,x=20,y=2,dir=6,color='green')
-    
-    python_actr.display(world)
-    
-    start_time = time.time()
-    world.run()
-    end_time = time.time()
-    exp_time = end_time - start_time # gets time of agent in env
-    
+def experiment(test_num):
+    match test_num:
+        case 1:
+            world=grid.World(MyCell,map=AgentSupport.twolane)
+            agent=DrivingAgent()
+            world.add(agent,x=1,y=1,dir=2,color='blue')
+            python_actr.log_everything(agent, AgentSupport.my_log)
+            
+            npc_agent1=NPCAgent()
+            world.add(npc_agent1,x=20,y=2,dir=6,color='green')
+            
+            python_actr.display(world)
+            
+            start_time = time.time()
+            world.run()
+            end_time = time.time()
+            exp_time = end_time - start_time # gets time of agent in env
+        
+        case _:
+            print("Invalid experiment number inputed")
+            
     score = agent.score - (exp_time * .025);
     if score < 0: # if sim ends abruptly
         score = 0
@@ -131,6 +135,6 @@ def hill_exp():
     python_actr.display(world)
     world.run()
 
-twolaneExp()
+experiment(1)
 # turn_exp()
 # hill_exp()
