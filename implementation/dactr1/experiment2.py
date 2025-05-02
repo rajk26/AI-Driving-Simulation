@@ -41,18 +41,6 @@ class DrivingAgent(ACTR):
         goal.set("start")
 		#Request next step from DM
         DM_module.request("square:obj location_x:?x location_y:?y", require_new=True)
-        
-    # def merge_right(goal="start", motorInst='busy:False'):
-    #     motorInst.turn_right()
-        
-	# 	#Request next step from DM
-    #     # DM_module.request("prev:driving next:?")
-        
-    # def merge_left(goal="start", motorInst='busy:False'):
-    #     motorInst.turn_left()
-        
-	# 	#Request next step from DM
-    #     # DM_module.request("prev:driving next:?")
     
     # If driver reaches green sq, end sim positive result
     def destination(body="cell.targetsquare:True", utility=.6):
@@ -178,7 +166,7 @@ def experiment(test_num):
         print("Experment 1 Results . . .")
         
     
-    if test_num==2:
+    elif test_num==2:
         total_score = 0
         
         for i in range(3):
@@ -190,7 +178,7 @@ def experiment(test_num):
         average = total_score / 3
         print("Experment 2 Results . . .")
         
-    if test_num==3:
+    elif test_num==3:
         total_score = 0
         
         for i in range(3):
@@ -209,5 +197,5 @@ def experiment(test_num):
     print("Agent Average Score: ", average)
     
 # experiment(1)
-# experiment(2)
-experiment(3)
+experiment(2)
+# experiment(3)
